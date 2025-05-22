@@ -1,0 +1,44 @@
+\begin{algorithm}[t]
+    \caption{Kruskal-Optimized Subgraph Connection}
+    \label{alg:connect_subgraphs}
+    \begin{algorithmic}[1]
+    \Require Graph $G = (V, E)$, list of subgraphs $\{S_1, \ldots, S_k\}$ where each $S_i = (\text{entities}_i, \text{edges}_i)$
+    \Ensure Merged and connected subgraphs
+    
+    \State $P \gets \emptyset$ \Comment{Candidate shortest paths}
+    \For{$i \gets 1$ to $k-1$}
+        \For{$j \gets i+1$ to $k$}
+            \State $V_i \gets \text{entities}_i$, $V_j \gets \text{entities}_j$
+            \If{paths exist between any $u \in V_i$ and $v \in V_j$ and $V_i \not\subseteq V_j$}
+                \State $p^* \gets$ shortest path between some $u \in V_i$, $v \in V_j$
+                \State Add $(i, j, p^*, |p^*|)$ to $P$
+            \EndIf
+        \EndFor
+    \EndFor
+    
+    \State Sort $P$ by path length ascending
+    \State $A \gets$ deep copy of subgraphs
+    
+    \For{each $(i, j, p)$ in $P$}
+        \State $V_i, V_j \gets$ current entity sets
+        \If{$V_i \subseteq V_j$ or $V_j \subseteq V_i$}
+            \State Merge $V_i$, $V_j$, and their edges
+        \Else
+            \State Merge $V_i$, $V_j$, and nodes/edges from $p$
+        \EndIf
+    \EndFor
+    
+    \State Sort $A$ by size of $V_i$ descending
+    
+    \State $R \gets \emptyset$, $N \gets \emptyset$, $E \gets \emptyset$
+    \For{each subgraph $S$ in $A$}
+        \If{$S$ has new nodes or edges not in $N$ or $E$}
+            \State Add $S$ to $R$
+            \State $N \gets N \cup$ nodes of $S$, $E \gets E \cup$ edges of $S$
+        \EndIf
+    \EndFor
+    
+    \State \Return $R$
+    \end{algorithmic}
+    \end{algorithm}
+    

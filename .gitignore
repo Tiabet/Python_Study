@@ -1,0 +1,6 @@
+graph_rag_project/rag_agriculture/.env
+*.jsonl
+*.json
+*.txt
+venv
+graph_rag_project
