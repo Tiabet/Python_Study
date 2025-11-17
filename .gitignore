@@ -4,3 +4,4 @@ graph_rag_project/rag_agriculture/.env
 *.txt
 venv
 graph_rag_project
+.env
